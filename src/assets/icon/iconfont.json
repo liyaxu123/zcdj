@@ -1,0 +1,65 @@
+{
+  "id": "1833572",
+  "name": "111",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2768292",
+      "name": "统计",
+      "font_class": "tongji",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "14055535",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "1917155",
+      "name": "单选项",
+      "font_class": "radio",
+      "unicode": "e80c",
+      "unicode_decimal": 59404
+    },
+    {
+      "icon_id": "798260",
+      "name": "emi纸飞机",
+      "font_class": "emizhifeiji",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "9940266",
+      "name": "money",
+      "font_class": "money",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "10166332",
+      "name": "form",
+      "font_class": "form",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "10594752",
+      "name": "表-通用表单_jurassic",
+      "font_class": "jurassic_form",
+      "unicode": "e6af",
+      "unicode_decimal": 59055
+    },
+    {
+      "icon_id": "10635168",
+      "name": "列表-目录",
+      "font_class": "catalog",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    }
+  ]
+}
