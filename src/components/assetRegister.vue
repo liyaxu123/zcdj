@@ -1003,6 +1003,9 @@ export default {
   font-size: 20px;
   cursor: pointer;
 }
+.el-table__body tr:hover .iconfont {
+  color: #5cb6ff;
+}
 .el-autocomplete-suggestion li {
   line-height: normal !important;
 }
