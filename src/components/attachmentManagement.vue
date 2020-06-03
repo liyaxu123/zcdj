@@ -117,14 +117,12 @@
       <!-- 添加合同表单 -->
       <el-form ref="addform" :model="UniProp_FJ" :rules="addrules" label-width="120px">
         <el-row>
-          <el-col :span="18" :offset="2">
+          <el-col :span="12">
             <el-form-item label="合同编号" prop="HTBH">
               <el-input v-model="UniProp_FJ.HTBH"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="18" :offset="2">
+          <el-col :span="12">
             <el-form-item label="合同名称" prop="HTMC">
               <el-input v-model="UniProp_FJ.HTMC"></el-input>
             </el-form-item>
@@ -846,7 +844,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
-.el-input{
-  max-width: 160px;
+.el-input {
+  /* max-width: 160px; */
 }
 </style>

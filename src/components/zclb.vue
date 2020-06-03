@@ -10,52 +10,50 @@
     <div class="addcengji">
       <!-- 搜索部分 -->
       <el-card style="margin-top:10px;" class="searchCard">
-        <el-form
-          :model="where"
-          ref="ruleForm"
-          class="searchform"
-          :inline="true"
-        >
+        <el-form :model="where" ref="ruleForm" class="searchform" :inline="true">
           <el-row>
-            <el-col :xs="8" :sm="8" :md="8" :lg="5" :xl="6">
-              <el-form-item label="资产名称">
-                <el-input placeholder="请输入资产名称" v-model="where.ZC_ZCMC" clearable></el-input>
-              </el-form-item>
+            <el-col :xs="22" :sm="22" :md="18" :lg="16" :xl="12">
+              <el-row>
+                <el-col :span="7">
+                  <el-form-item label="资产名称">
+                    <el-input placeholder="请输入资产名称" v-model="where.ZC_ZCMC" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="7">
+                  <el-form-item label="合同名称">
+                    <el-input placeholder="请输入合同名称" v-model="where.ZC_HTMC" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="7">
+                  <el-form-item label="使用人">
+                    <el-input placeholder="请输入使用人姓名" v-model="where.ZC_SYR" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="3">
+                  <el-form-item>
+                    <el-button icon="el-icon-search" circle @click="search"></el-button>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="5" :xl="6">
-              <el-form-item label="合同名称">
-                <el-input placeholder="请输入合同名称" v-model="where.ZC_HTMC" clearable></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="8" :sm="8" :md="8" :lg="5" :xl="6">
-              <el-form-item label="使用人">
-                <el-input placeholder="请输入使用人姓名" v-model="where.ZC_SYR" clearable></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="2" :sm="2" :md="2" :lg="1" :xl="4">
-              <el-form-item>
-                <el-button icon="el-icon-search" circle @click="search"></el-button>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="4" :sm="4" :md="3" :lg="2" :xl="4">
-              <el-form-item>
-                <el-button icon="el-icon-plus" size="medium" @click="add" type="primary">登记</el-button>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="4" :sm="4" :md="3" :lg="2" :xl="4">
-              <el-form-item>
-                <el-button icon="el-icon-share" size="medium" @click="share">分享</el-button>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="4" :sm="4" :md="3" :lg="2" :xl="4">
-              <el-form-item>
-                <el-button
-                  size="medium"
-                  icon="el-icon-s-check"
-                  type="primary"
-                  @click="addCheckList"
-                >验收</el-button>
-              </el-form-item>
+            <el-col :xs="2" :sm="2" :md="6" :lg="8" :xl="6">
+              <el-row>
+                <el-col :span="6" :offset="6">
+                  <el-form-item>
+                    <el-button icon="el-icon-plus" size="medium" @click="add" type="primary">登记</el-button>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item>
+                    <el-button icon="el-icon-share" size="medium" @click="share">分享</el-button>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item>
+                    <el-button size="medium" icon="el-icon-s-check" @click="addCheckList">验收</el-button>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </el-col>
           </el-row>
 
@@ -71,8 +69,7 @@
           ref="multipleTable"
           border
           style="width: 100%"
-          height='400px'
-          max-height="610px"
+          :height="dyHeight"
           @selection-change="changeFun"
           :header-cell-style="{'background':'#f2f2f2'}"
         >
@@ -97,7 +94,12 @@
             <template slot-scope="scope">
               <el-button
                 type="text"
-                @click="edit(scope)"
+                @click="edit(scope,false)"
+                v-show="scope.row.STATUS=='T1'?true:false"
+              >详情</el-button>
+              <el-button
+                type="text"
+                @click="edit(scope,true)"
                 v-show="scope.row.STATUS=='T1'?false:true"
               >编辑</el-button>
               <el-button
@@ -113,7 +115,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="where.page"
-          :page-sizes="[5, 10, 20, 50]"
+          :page-sizes="[1,5, 10, 20, 50]"
           :page-size="where.rows"
           layout="total, sizes, prev, pager, next, jumper"
           :total="where.total"
@@ -192,7 +194,12 @@ export default {
   data() {
     return {
       // 查询条件
-      where: { ZC_ZCMC: "", ZC_SYR: "", ZC_HTMC: "", STATUS: "T0,T1" },
+      where: {
+        ZC_ZCMC: "",
+        ZC_SYR: "",
+        ZC_HTMC: "",
+        STATUS: "T0,T1"
+      },
       tableData: [],
       // 控制添加对话框的显示与隐藏
       addDialogVisible: false,
@@ -205,13 +212,25 @@ export default {
       // 控制加入验收清单抽屉的显示与隐藏
       drawer: false,
       // 控制自定义申请验收消息提示对话框的显示与隐藏
-      diyDialogVisible: false
+      diyDialogVisible: false,
+      dyHeight: window.innerHeight - 400
     };
   },
   created() {
     this.where = this.globalVar.baseWhere(this.where);
     this.where.sidx = "ZC_HTBH,CJRQ";
+    let condition = this.$route.params.where;
+    if (condition != undefined) {
+      for (var it in this.where) {
+        this.where[it] = condition[it];
+      }
+    }
     this.getTableInfo();
+  },
+  mounted() {
+    window.onresize = () => {
+      this.dyHeight = window.innerHeight - 400;
+    };
   },
   methods: {
     // 请求表格数据信息
@@ -230,14 +249,18 @@ export default {
     },
     // 添加
     add() {
-      // this.dialogVisibleTitle = "添加资产";
-      // this.addDialogVisible = true;
-      this.$store.commit("removeUniProp_ZCRecordIID");
       // 跳转到资产登记页面
-      this.$router.push("/assetRegister");
+      this.where.CanEdit = true;
+      this.where.GobackURI = "zclb";
+      this.where.PrimaryKey = 0;
+      this.$router.push({
+        name: "assetRegister",
+        params: { where: this.where }
+      });
     },
     // 分享按钮点击事件
     share() {
+      var _this = this;
       console.log(this.multipleSelection);
       if (this.multipleSelection.length == 0) {
         this.$message({
@@ -246,15 +269,40 @@ export default {
           type: "warning"
         });
       } else {
-        // 清空选项
-        this.$refs.multipleTable.clearSelection();
-        // 清空选中数据的数组
-        this.multipleSelection.length = 0;
-        this.$message({
-          showClose: true,
-          message: "分享资产成功",
-          type: "success"
-        });
+        // 发起请求 this.multipleSelection[i].IID
+        let Record = [];
+        for (var i = 0; i < this.multipleSelection.length; i++) {
+          Record.push({
+            IID: 0,
+            RecordLSBH: this.multipleSelection[i].LSBH
+          });
+        }
+
+        let cparams = "data=" + JSON.stringify(Record);
+        UpdateService(
+          cparams,
+          "post",
+          "/DataGate/EditModel?model=UniProp_ZCShare",
+          function(data) {
+            console.log(data);
+            if (data.err == "") {
+              // 清空选项;
+              this.$refs.multipleTable.clearSelection();
+              // 清空选中数据的数组;
+              this.multipleSelection.length = 0;
+              this.$message({
+                showClose: true,
+                message: "分享资产成功",
+                type: "success"
+              });
+            } else {
+              _this.$message({
+                message: "操作失败",
+                type: "error"
+              });
+            }
+          }
+        );
       }
     },
     // 申请验收按钮点击事件
@@ -359,12 +407,14 @@ export default {
       return this.globalVar.getDictName(row.STATUS, "SHST", "ZCSTATUS");
     },
     // 编辑
-    edit(scope) {
-      // 将该条数据的 IID 传给 资产登记页面
-      this.$store.commit("getUniProp_ZCRecordIID", scope.row.IID);
-      // 将该条数据的 FJLSBH 传给 资产登记页面
-      // this.$store.commit("getUniProp_ZCRecordFJLSBH", scope.row.ZC_FJLSBH);
-      this.$router.push("/assetRegister");
+    edit(scope, edb) {
+      this.where.CanEdit = edb;
+      this.where.GobackURI = "zclb";
+      this.where.PrimaryKey = scope.row.IID;
+      this.$router.push({
+        name: "assetRegister",
+        params: { where: this.where }
+      });
     },
     // 删除
     delet(scope) {
@@ -422,11 +472,12 @@ export default {
     // 是否禁止表格某行多选
     isCheck(row, index) {
       // console.log(row.STATUS)
-      if (row.STATUS == "T1") {
-        return false;
-      } else {
-        return true;
-      }
+      // if (row.STATUS == "T1") {
+      //   return false;
+      // } else {
+      //   return true;
+      // }
+      return true;
     },
     // 分页——改变每页的显示条数
     handleSizeChange(val) {
@@ -490,7 +541,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.el-input{
+.el-input {
   max-width: 160px;
 }
 </style>
