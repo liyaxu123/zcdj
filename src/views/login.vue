@@ -35,9 +35,9 @@
           </div>
           <!-- 账号登录 -->
           <div class="qqbox" v-if="qqshow">
-            <p class="shry">管理员登录</p>
+            <!-- <p class="shry">管理员登录</p> -->
             <el-form :model="shyInfo" :rules="rules" ref="loginForm">
-              <el-row style="margin-top:20px;height:40px;">
+              <el-row style="margin-top:60px;height:40px;">
                 <el-col :span="18" :offset="3">
                   <el-form-item prop="UserName">
                     <el-input v-model="shyInfo.UserName" placeholder="请输入您的账号"></el-input>
@@ -52,8 +52,8 @@
                 </el-col>
               </el-row>
               <el-row style="margin-top:20px;" type="flex" justify="center">
-                <el-col :span="12" :offset="8">
-                  <el-button type="primary" @click="login">登录</el-button>
+                <el-col :span="18">
+                  <el-button class="loginBtn" type="primary" @click="login">登录</el-button>
                 </el-col>
               </el-row>
             </el-form>
@@ -390,5 +390,8 @@ h1 a {
 .shry {
   text-align: center;
   margin-top: 30px;
+}
+.loginBtn{
+  width: 100%;
 }
 </style>

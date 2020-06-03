@@ -27,7 +27,7 @@
         <!-- 第一行 -->
         <el-row>
           <el-col :span="8">
-            <el-form-item label="使用人">
+            <el-form-item label="使用人" prop="ZC_SYR">
               <!-- <el-input v-model="UniProp_ZCRecord.ZC_SYR"></el-input> -->
               <el-autocomplete
                 v-model="UniProp_ZCRecord.ZC_SYR"
@@ -35,6 +35,7 @@
                 placeholder="请输入使用人"
                 :trigger-on-focus="false"
                 @select="SYRhandleSelect"
+                :disabled="isDisabled"
               >
                 <template slot-scope="{ item }">
                   <div class="name">{{ item.RealName }}</div>
@@ -45,12 +46,16 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="使用单位" prop="ZC_SYDW">
-              <el-input v-model="UniProp_ZCRecord.ZC_SYDW"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_SYDW" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="用途" prop="ZC_YT">
-              <el-select v-model="UniProp_ZCRecord.ZC_YT" placeholder="请选择用途">
+              <el-select
+                v-model="UniProp_ZCRecord.ZC_YT"
+                :disabled="isDisabled"
+                placeholder="请选择用途"
+              >
                 <el-option
                   :label="item.name"
                   :value="item.id"
@@ -65,17 +70,17 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="资产名称" prop="ZC_ZCMC">
-              <el-input v-model="UniProp_ZCRecord.ZC_ZCMC"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_ZCMC" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="品牌/型号" prop="ZC_PPXH">
-              <el-input v-model="UniProp_ZCRecord.ZC_PPXH"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_PPXH" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="厂家" prop="ZC_CJ">
-              <el-input v-model="UniProp_ZCRecord.ZC_CJ"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_CJ" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -83,7 +88,11 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="数量" prop="ZC_Num">
-              <el-input v-model.number="UniProp_ZCRecord.ZC_Num" @keyup.native="calMoney('ZC_Num')"></el-input>
+              <el-input
+                v-model.number="UniProp_ZCRecord.ZC_Num"
+                @keyup.native="calMoney('ZC_Num')"
+                :disabled="isDisabled"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -93,6 +102,7 @@
                 v-model="UniProp_ZCRecord.ZC_Price"
                 @keyup.native="calMoney('ZC_Price')"
                 autocomplete="off"
+                :disabled="isDisabled"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -103,6 +113,7 @@
                 v-model="UniProp_ZCRecord.ZC_Sum"
                 @keyup.native="calMoney('ZC_Sum')"
                 autocomplete="off"
+                :disabled="isDisabled"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -111,7 +122,11 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="是否进口" prop="ZC_SFJK">
-              <el-select v-model="UniProp_ZCRecord.ZC_SFJK" placeholder="请选择">
+              <el-select
+                v-model="UniProp_ZCRecord.ZC_SFJK"
+                :disabled="isDisabled"
+                placeholder="请选择"
+              >
                 <el-option label="是" value="1"></el-option>
                 <el-option label="否" value="0"></el-option>
               </el-select>
@@ -119,12 +134,16 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="国家" prop="ZC_GJ">
-              <el-input v-model="UniProp_ZCRecord.ZC_GJ"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_GJ" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="是否免税" prop="ZC_SFMS">
-              <el-select v-model="UniProp_ZCRecord.ZC_SFMS" placeholder="请选择">
+              <el-select
+                v-model="UniProp_ZCRecord.ZC_SFMS"
+                :disabled="isDisabled"
+                placeholder="请选择"
+              >
                 <el-option label="是" value="1"></el-option>
                 <el-option label="否" value="0"></el-option>
               </el-select>
@@ -144,6 +163,7 @@
                     value-format="yyyy-MM-dd"
                     v-model="UniProp_ZCRecord.ZC_GZRQKS"
                     style="width: 100%;"
+                    :disabled="isDisabled"
                   ></el-date-picker>
                 </el-col>
               </el-row>
@@ -160,6 +180,7 @@
                     value-format="yyyy-MM-dd"
                     v-model="UniProp_ZCRecord.ZC_BXRQKS"
                     style="width: 100%;"
+                    :disabled="isDisabled"
                   ></el-date-picker>
                 </el-col>
                 <el-col :span="2" class="line">-</el-col>
@@ -171,6 +192,7 @@
                     value-format="yyyy-MM-dd"
                     v-model="UniProp_ZCRecord.ZC_BXRQJS"
                     style="width: 100%;"
+                    :disabled="isDisabled"
                   ></el-date-picker>
                 </el-col>
               </el-row>
@@ -178,7 +200,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="存放地点" prop="ZC_CFDD">
-              <el-input v-model="UniProp_ZCRecord.ZC_CFDD"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_CFDD" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -186,12 +208,12 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="项目经费编号" prop="ZC_XMJFBH">
-              <el-input v-model="UniProp_ZCRecord.ZC_XMJFBH"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_XMJFBH" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="经费负责人" prop="ZC_JFFZR">
-              <el-input v-model="UniProp_ZCRecord.ZC_JFFZR"></el-input>
+              <el-input v-model="UniProp_ZCRecord.ZC_JFFZR" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8"></el-col>
@@ -303,7 +325,7 @@
                     <img width="40" height="40" src="../assets/img.png" alt />
                   </a>
                 </el-col>
-                <el-col :span="5">
+                <el-col :span="5" v-show="isShowSaveBtn">
                   <!-- 图片上传 -->
                   <el-upload
                     :action="uploadURL"
@@ -317,8 +339,12 @@
                     <el-button size="small" icon="el-icon-upload2">点击上传</el-button>
                   </el-upload>
                 </el-col>
-                <el-col :span="5">
-                  <el-button size="small" icon="el-icon-upload2" @click="uploadImg('请扫描二维码上传实物现场图片')">手机上传</el-button>
+                <el-col :span="5" v-show="isShowSaveBtn">
+                  <el-button
+                    size="small"
+                    icon="el-icon-upload2"
+                    @click="uploadImg('请扫描二维码上传实物现场图片')"
+                  >手机上传</el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -328,7 +354,7 @@
     </el-card>
     <!-- 底部保存按钮 -->
     <div class="footer">
-      <el-button type="primary" size="medium" @click="saveMessage">保存</el-button>
+      <el-button type="primary" size="medium" v-if="isShowSaveBtn" @click="saveMessage">保存</el-button>
       <el-button size="medium" @click="goBack">返回</el-button>
     </div>
     <!-- 选择发票编号的对话框 -->
@@ -357,9 +383,11 @@
         max-height="500px"
         :header-cell-style="{'background':'#f2f2f2'}"
       >
-        <el-table-column align="center" label width="80">
+        <el-table-column align="center" width="80">
           <template slot-scope>
-            <div class="iconfont icon-radio"></div>
+            <div class="radio">
+              <i></i>
+            </div>
           </template>
         </el-table-column>
         <el-table-column property="HTBH" align="center" label="合同编号"></el-table-column>
@@ -538,11 +566,45 @@ export default {
         HTBH: ""
       },
       // 控制附件是否显示
-      isCheckHT: false
+      isCheckHT: false,
+      // 控制底部保存按钮显示与隐藏  也就是控制该页面是否可以编辑
+      isShowSaveBtn: false,
+      // 根据编辑和查看按钮控制输入框是否只读
+      isDisabled: true
     };
   },
   created() {
-    console.log(this.UniProp_ZCRecord)
+    // 获取路由传过来的参数
+    let condition = this.$route.params.where;
+    // 如果路由没有传参就返回到上一页面
+    if (condition == undefined) {
+      this.$router.back(-1);
+    } else {
+      // 如果路由传过来的 PrimaryKey = 0，就添加登记，否则就是编辑操作
+      if (condition.PrimaryKey == 0) {
+        // 重置UniProp_ZCRecord表单字段
+        for (var it in this.UniProp_ZCRecord) {
+          if (it == "IID") {
+            this.UniProp_ZCRecord[it] = 0;
+          } else if (it == "STATUS") {
+            this.UniProp_ZCRecord[it] = "T0";
+          } else {
+            this.UniProp_ZCRecord[it] = "";
+          }
+        }
+      } else {
+        // 发起请求得到需要编辑的这条数据
+        this.getEditInfo(condition.PrimaryKey);
+      }
+      // 控制页面是否可操作
+      this.isShowSaveBtn = condition.CanEdit;
+      if (condition.CanEdit == true) {
+        this.isDisabled = false;
+      } else {
+        this.isDisabled = true;
+      }
+    }
+    // console.log(this.UniProp_ZCRecord);
     // 继承公共的where
     this.where = this.globalVar.baseWhere(this.where);
     // 获取数据字典
@@ -553,24 +615,6 @@ export default {
         dictList[i].category == "ZCusageCate"
       ) {
         this.ytSelectList.push(dictList[i]);
-      }
-    }
-    // console.log(this.$store.state.UniProp_ZCRecordIID);
-    // 从store中获得资产列表页传过来的数据
-    if (this.$store.state.UniProp_ZCRecordIID != "") {
-      // 发起请求得到需要编辑的这条数据
-      var id = this.$store.state.UniProp_ZCRecordIID;
-      this.getEditInfo(id);
-    } else {
-      // 重置UniProp_ZCRecord表单字段
-      for (var it in this.UniProp_ZCRecord) {
-        if (it == "IID") {
-          this.UniProp_ZCRecord[it] = 0;
-        } else if (it == "STATUS") {
-          this.UniProp_ZCRecord[it] = "T0";
-        } else {
-          this.UniProp_ZCRecord[it] = "";
-        }
       }
     }
   },
@@ -769,7 +813,11 @@ export default {
     },
     // 底部返回按钮点击事件
     goBack() {
-      this.$router.push("/zclb");
+      let condition = this.$route.params.where;
+      this.$router.push({
+        name: condition.GobackURI,
+        params: { where: condition }
+      });
     },
     // 监听合同编号输入框点击事件
     blurSearch() {
@@ -955,9 +1003,6 @@ export default {
   font-size: 20px;
   cursor: pointer;
 }
-.el-table__body tr:hover .iconfont {
-  color: #5cb6ff;
-}
 .el-autocomplete-suggestion li {
   line-height: normal !important;
 }
@@ -976,7 +1021,33 @@ export default {
   color: #ddd;
 }
 
-.el-autocomplete{
+.el-autocomplete {
   width: 100%;
+}
+.radio{
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #b4b4b4;
+  border-radius: 50%;
+  margin: 0px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.radio i{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #5cb6ff;
+  border-radius: 50%;
+  display: none;
+}
+.el-table__body tr:hover .radio{
+  border-color: #5cb6ff;
+}
+.el-table__body tr:hover .radio i{
+  display: block;
 }
 </style>

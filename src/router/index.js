@@ -11,7 +11,8 @@ const Login = () => import('../views/login')
 const Home = () => import('../views/home')
 const Index = () => import('../components/index')
 const Share = () => import('../components/share')
-const myShare = () => import('../components/myShare')
+const myShare = () => import('../views/myShare')
+const zcbg = () => import('../views/zcbg')
 const Zclb = () => import('../components/zclb')
 const AssetRegister = () => import('../components/assetRegister')
 const AttachmentManagement = () => import('../components/attachmentManagement')
@@ -30,6 +31,7 @@ const routes = [
   },
   {
     path: '/login',
+    name:'login',
     component: Login
   },
   {
@@ -47,10 +49,12 @@ const routes = [
       },
       {
         path: '/assetRegister',
+        name:'assetRegister',
         component: AssetRegister,
       },
       {
         path: '/zclb',
+        name:'zclb',
         component: Zclb,
       },
       {
@@ -63,6 +67,7 @@ const routes = [
       },
       {
         path: '/myshare',
+        name:'myshare',
         component: myShare,
       },
       {
@@ -80,6 +85,10 @@ const routes = [
       {
         path: '/wdzc',
         component: Wdzc,
+      },
+      {
+        path: '/zcbg',
+        component: zcbg,
       }
     ]
   }

@@ -9,124 +9,133 @@
     </div>
     <el-card style="margin-top:10px;">
       <!-- 信息提示 -->
-      <el-alert
-        title="我就是爱分享查找朋友分享的资产"
-        center
-        type="success"
-        description="文字说明文字说明文字说明文字说明"
-        show-icon
-      ></el-alert>
+      <div>
+        <el-alert title="在这里您可以查看朋友分享的资产，也可以查看您分享的资产哦！" center type="info" show-icon></el-alert>
+      </div>
       <el-row>
-        <el-col :span="3" :offset="21">
-          <el-row>
-            <el-col :span="11" class="a1">
-              <el-link icon="el-icon-search" :underline="false">查找资产</el-link>
-            </el-col>
-            <el-col :span="2" class="a1">|</el-col>
-            <el-col :span="11" class="a1">
-              <el-link icon="el-icon-user-solid" :underline="false" @click="myshare">我的分享</el-link>
-            </el-col>
-          </el-row>
-        </el-col>
+        <el-col :span="3" :offset="21"></el-col>
       </el-row>
       <h2 class="a1" style="margin-top:20px">查找朋友分享的资产</h2>
-      <h3 class="a1" style="margin-top:20px">“资产分享”目前公测中，在安装朋友分享的资产前，请务必先备份</h3>
+      <!-- <h3 class="a1" style="margin-top:20px">“资产分享”目前公测中，在安装朋友分享的资产前，请务必先备份</h3> -->
       <div class="searchBox" style="margin-top:30px">
         <el-input
           placeholder="请输入分享码，查找朋友的分享"
           prefix-icon="el-icon-search"
-          v-model="searchInfo"
+          v-model="where.ShareCode"
           clearable
         ></el-input>
-        <el-button type="primary" icon="el-icon-search">查找</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="queryData">查找</el-button>
       </div>
-      <h3 class="a1" style="margin-top:50px;">我的资产</h3>
+      <!-- <h3 class="a1" style="margin-top:50px;">我的分享</h3> -->
       <!-- 分享内容 -->
       <div class="contentBox">
-        <el-card class="contentCard" v-for="item in contentCardList" :key="item.id">
-          <div slot="header">
-            <span class="bood">{{item.title}}</span>
-          </div>
-          <p>合同金额：{{item.HTJE}}万元</p>
-          <p>发票金额：{{item.FPJE}}万元</p>
-          <p>供应商信息：{{item.GYSXX}}</p>
-          <p>使用人：{{item.SYY}}</p>
-          <div class="imgBox">
-            <img v-for="item2 in item.imglist" :key="item2.id" :src="item2.src" />
-          </div>
-          <el-row>
-            <p>资产清单：{{item.cjqd}}个</p>
-          </el-row>
-          <el-row>
-            <p>分享码：{{item.shareCode}}</p>
-          </el-row>
-        </el-card>
+        <div
+          class="ttbox"
+          v-for="(item) in myShareList"
+          :key="item.id"
+        >
+          <el-card class="contentCard">
+            <div @click="toShareList(item.LSBH)">
+              <div class="pp" slot="header">
+                <span class="bood">合同名称：{{item.ZC_HTMC}}</span>
+              </div>
+              <p class="pp">合同金额：{{item.ZC_HTJE}}万元</p>
+              <p class="pp">发票金额：{{item.ZC_FPJE}}万元</p>
+              <p class="pp">供应商信息：{{item.ZC_GYSXX}}</p>
+              <p class="pp">使用人：{{item.ZC_SYR}}</p>
+              <div class="imgBox">
+                <div class="imgbox2" v-for="(item2,index) in item.SWXCZPCollection" :key="index">
+                  <img :src="item2" />
+                </div>
+              </div>
+            </div>
+            <el-row>
+              <p class="pp">资产清单：{{item.ZXCount}}个</p>
+            </el-row>
+            <el-row>
+              <p class="pp">分享码：{{item.ShareCode}}</p>
+            </el-row>
+          </el-card>
+        </div>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
+import { QueryService, UpdateService } from "@/utils/api.js";
 export default {
   data() {
     return {
-      searchInfo: "",
-      contentCardList: [
-        {
-          id: 1,
-          title: "合同名称1",
-          HTJE: "243",
-          FPJE: "256",
-          GYSXX: "最强华为",
-          SYY: "任正非",
-          cjqd: 22,
-          imglist: [
-            { id: 1, src: require("@/assets/1.jpg") },
-            { id: 2, src: require("@/assets/1.jpg") },
-            { id: 3, src: require("@/assets/1.jpg") },
-            { id: 4, src: require("@/assets/1.jpg") },
-            { id: 5, src: require("@/assets/1.jpg") }
-          ],
-          shareCode: "11565ajsdlsajdsadaslajasl12kjdslajkd"
-        },
-        {
-          id: 2,
-          title: "合同名称2",
-          HTJE: "243",
-          FPJE: "256",
-          GYSXX: "阿里巴巴",
-          SYY: "马云",
-          cjqd: 22,
-          imglist: [
-            { id: 1, src: require("@/assets/1.jpg") },
-            { id: 2, src: require("@/assets/1.jpg") },
-            { id: 3, src: require("@/assets/1.jpg") },
-            { id: 4, src: require("@/assets/1.jpg") },
-            { id: 5, src: require("@/assets/1.jpg") }
-          ],
-          shareCode: "11565ajsdlsajdsadaslajasl12kjdslajkd"
-        },{
-          id: 3,
-          title: "合同名称3",
-          HTJE: "243",
-          FPJE: "256",
-          GYSXX: "腾讯科技",
-          SYY: "马蛋腾",
-          cjqd: 22,
-          imglist: [
-            { id: 1, src: require("@/assets/1.jpg") },
-            { id: 2, src: require("@/assets/1.jpg") },
-            { id: 3, src: require("@/assets/1.jpg") },
-            { id: 4, src: require("@/assets/1.jpg") },
-            { id: 5, src: require("@/assets/1.jpg") }
-          ],
-          shareCode: "11565ajsdlsajdsadaslajasl12kjdslajkd"
-        }
-      ]
+      myShareList: [],
+      ZCCache: [],
+      where: { ShareCode: "" }
     };
   },
+  created() {
+    this.where = this.globalVar.baseWhere(this.where);
+    this.queryData();
+  },
   methods: {
-    myshare() {
+    queryData() {
+      var _this = this;
+      // 查找资产分享表
+      QueryService(this.where, "post", "/DataGate/GetZCShare", function(data) {
+        // console.log(data);
+        _this.ZCCache = data.sdata;
+
+        for (var i = 0; i < data.mdata.data.length; i++) {
+          let mobj = data.mdata.data[i];
+          //初始化视图属性
+          mobj.SWXCZPCollection = [];
+          mobj.ZXCount = 0;
+
+          for (var j = 0; j < _this.ZCCache.length; j++) {
+            let sobj = _this.ZCCache[j];
+
+            if (mobj.LSBH == sobj.ShareLSBH) {
+              if (mobj.ZC_HTMC == undefined) {
+                mobj.ZC_HTMC = sobj.ZC_HTMC;
+                mobj.ZC_HTJE = sobj.ZC_HTJE;
+                mobj.ZC_FPJE = sobj.ZC_FPJE;
+                mobj.ZC_GYSXX = sobj.ZC_GYSXX;
+                mobj.ZC_SYR = sobj.ZC_SYR;
+              }
+              //实物照片
+              let imgUrl =
+                _this.globalVar.ReqIPAddr +
+                _this.globalVar.FileRoot +
+                sobj.FJ_SWXCZP.split("$")[0];
+              if (mobj.SWXCZPCollection.length < 5) {
+                mobj.SWXCZPCollection.push(imgUrl);
+              }
+              mobj.ZXCount += 1;
+            }
+          }
+        }
+        // data.mdata.data[0].SWXCZPCollection.push(
+        //   "http://172.23.55.69:8015/upload/2020/05/29/9a0e58b6-a3db-4b0c-bc8e-01771228990e.jpg"
+        // );
+        // data.mdata.data[0].SWXCZPCollection.push(
+        //   "http://172.23.55.69:8015/upload/2020/05/29/9a0e58b6-a3db-4b0c-bc8e-01771228990e.jpg"
+        // );
+        // data.mdata.data[0].SWXCZPCollection.push(
+        //   "http://172.23.55.69:8015/upload/2020/05/29/07ca8c26-cd98-45d8-8557-81606e5bdec4.png"
+        // );
+        _this.myShareList = data.mdata.data;
+        _this.where.total = data.mdata.total;
+        // console.log(_this.myShareList);
+      });
+    },
+    toShareList(shareLSBH) {
+      let ZCList = [];
+      for (var j = 0; j < this.ZCCache.length; j++) {
+        let sobj = this.ZCCache[j];
+        if (shareLSBH == sobj.ShareLSBH) {
+          ZCList.push(sobj);
+        }
+      }
+      window.sessionStorage.setItem("SharedZCList", JSON.stringify(ZCList));
       this.$router.push("/myshare");
     }
   }
@@ -160,12 +169,17 @@ h3 {
   justify-content: space-between;
   flex-wrap: wrap;
   margin-left: 5%;
+  margin-top: 50px;
 }
 .contentBox:hover {
   cursor: pointer;
 }
-.contentCard {
+.ttbox {
   width: 46%;
+  margin-top: 20px;
+}
+.contentCard {
+  width: 100%;
   margin-top: 20px;
 }
 .bood {
@@ -182,15 +196,28 @@ h3 {
   -webkit-box-orient: vertical;
 }
 .imgBox {
+  width: 100%;
+  height: 100px;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 30px;
+  justify-content: flex-start;
+  /* padding-bottom: 10px; */
   border-bottom: 2px solid #ebedf1;
+  overflow: hidden;
 }
-.imgBox img {
+.imgBox .imgbox2 {
   width: 19%;
+  height: 100%;
+  margin-left: 1%;
+}
+.imgbox2 img {
+  width: 100%;
+  height: 80%;
+  /* margin-left: 1%; */
+}
+.imgBox .imgbox2:nth-child(1) {
+  margin-left: 0px;
 }
 .el-breadcrumb {
   height: 50px;
@@ -201,7 +228,11 @@ h3 {
   background: #fff;
 }
 .el-alert {
-  /* color: #5ab1ef; */
-  background: #e1eef8;
+  color: #5ab1ef;
+  background: #e7f7ff;
+}
+.pp {
+  height: 30px;
+  line-height: 30px;
 }
 </style>

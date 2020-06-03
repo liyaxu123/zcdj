@@ -18,41 +18,69 @@
         class="searchform"
       >
         <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="5" :xl="4">
-            <el-form-item label="合同编号">
-              <el-input placeholder="请输入合同编号" v-model="where.HTBH" clearable></el-input>
-            </el-form-item>
+          <el-col :xs="24" :sm="12" :md="20" :lg="20" :xl="12">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="合同编号">
+                  <el-input
+                    class="searchInput"
+                    placeholder="请输入合同编号"
+                    v-model="where.HTBH"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="合同名称">
+                  <el-input
+                    class="searchInput"
+                    placeholder="请输入合同名称"
+                    v-model="where.HTMC"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="发票编号">
+                  <el-input
+                    class="searchInput"
+                    placeholder="请输入发票编号"
+                    v-model="where.FPBH"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="供应商">
+                  <el-input
+                    class="searchInput"
+                    placeholder="请输入供应商"
+                    v-model="where.GYSXX"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="5" :xl="4">
-            <el-form-item label="合同名称">
-              <el-input placeholder="请输入合同名称" v-model="where.HTMC" clearable></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="5" :xl="4">
-            <el-form-item label="发票编号">
-              <el-input placeholder="请输入发票编号" v-model="where.FPBH" clearable></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="5" :xl="4">
-            <el-form-item label="供应商">
-              <el-input placeholder="请输入供应商" v-model="where.GYSXX" clearable></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="12" :sm="2" :md="2" :lg="1" :xl="4">
-            <el-form-item>
-              <el-button icon="el-icon-search" circle class="btnmargin" @click="search"></el-button>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="12" :sm="2" :md="2" :lg="2" :xl="4">
-            <el-form-item>
-              <el-button
-                type="primary"
-                icon="el-icon-plus"
-                size="medium"
-                @click="addht"
-                class="btnmargin"
-              >添加</el-button>
-            </el-form-item>
+          <el-col :xs="24" :sm="12" :md="4" :lg="4" :xl="12">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item>
+                  <el-button icon="el-icon-search" circle class="btnmargin" @click="search"></el-button>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item>
+                  <el-button
+                    type="primary"
+                    icon="el-icon-plus"
+                    size="medium"
+                    @click="addht"
+                    class="btnmargin"
+                  >添加</el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-col>
         </el-row>
       </el-form>
@@ -63,7 +91,7 @@
         :data="tableData"
         border
         style="width: 100%"
-        max-height="610px"
+        :height="dyHeight"
         :header-cell-style="{'background':'#f2f2f2'}"
       >
         <el-table-column prop="rownum" align="center" width="55" label="序号"></el-table-column>
@@ -117,21 +145,19 @@
       <!-- 添加合同表单 -->
       <el-form ref="addform" :model="UniProp_FJ" :rules="addrules" label-width="120px">
         <el-row>
-          <el-col :span="18" :offset="2">
+          <el-col :span="9" :offset="2">
             <el-form-item label="合同编号" prop="HTBH">
               <el-input v-model="UniProp_FJ.HTBH"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="18" :offset="2">
+          <el-col :span="9">
             <el-form-item label="合同名称" prop="HTMC">
               <el-input v-model="UniProp_FJ.HTMC"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8" :offset="2">
+          <el-col :span="9" :offset="2">
             <el-form-item label="签订日期" prop="QDRQ">
               <el-date-picker
                 type="date"
@@ -143,7 +169,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="8" :offset="2">
+          <el-col :span="9">
             <el-form-item label="合同金额(万元)" prop="HTJE">
               <el-input step="0.01" v-model="UniProp_FJ.HTJE"></el-input>
             </el-form-item>
@@ -197,12 +223,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8" :offset="2">
+          <el-col :span="9" :offset="2">
             <el-form-item label="发票编号" prop="FPBH">
               <el-input v-model="UniProp_FJ.FPBH"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8" :offset="2">
+          <el-col :span="9">
             <el-form-item label="发票金额(万元)" prop="FPJE">
               <el-input step="0.01" v-model="UniProp_FJ.FPJE"></el-input>
               <!-- <span>万元</span> -->
@@ -299,12 +325,6 @@
                 v-model="UniProp_FJ.MEMO"
               ></el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :span="18" :offset="2">
-            <el-form-item label="测试"></el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -435,7 +455,9 @@ export default {
       // 控制是否可以查看电子合同PDF
       isShowHTFJ: false,
       isShowFPFJ: false,
-      isShowYSCLFJ: false
+      isShowYSCLFJ: false,
+      // 动态设置表格高度
+      dyHeight: window.innerHeight - 332
     };
   },
   created() {
@@ -846,7 +868,10 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
-.el-input{
-  max-width: 160px;
+
+@media screen and (max-width: 1400px) {
+  .searchInput {
+    max-width: 160px;
+  }
 }
 </style>

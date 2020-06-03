@@ -75,14 +75,14 @@
               </div>
             </el-col>
             <el-col :xs="12" :sm="12" :lg="4" class="card-panel-col" v-if="isShowZCFX">
-              <!-- 统计分析 -->
-              <div @click="wdfx" class="mainboxItem">
+              <!-- 资产变更 -->
+              <div @click="zcbg" class="mainboxItem">
                 <div class="optionCard opcard6" shadow="hover" ref="optionCard6">
                   <div class="imgbox">
                     <i class="iconfont icon-tongji"></i>
                   </div>
                   <div class="pbox">
-                    <p>统计分析</p>
+                    <p>资产变更</p>
                     <p>102,400</p>
                   </div>
                 </div>
@@ -485,6 +485,9 @@ export default {
     },
     shys() {
       this.$router.push("/shys");
+    },
+    zcbg(){
+      this.$router.push("/zcbg");
     },
     // 绘制图表
     drawChart() {
